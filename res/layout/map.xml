@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="#000000" >
+
+    <TextView
+        android:id="@+id/bart_map_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="BART Map"
+        android:paddingTop="2dp"
+        android:textSize="40sp"
+        android:textColor="#FFFFFF" />
+        
+    <ImageView
+        android:id="@+id/bart_map"
+        android:layout_width="match_parent"
+        android:layout_height="440dp"
+        android:src="@drawable/bart_map"
+        android:scaleType="matrix" />
+    
+</LinearLayout>

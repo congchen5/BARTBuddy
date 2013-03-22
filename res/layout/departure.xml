@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/departureFrag"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000000" >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
+	<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/titles"
+		android:name="com.sample.frags.FragmentA"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" /> -->
