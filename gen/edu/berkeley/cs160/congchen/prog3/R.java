@@ -28,13 +28,14 @@ public final class R {
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090008;
+        public static final int action_settings=0x7f090009;
         public static final int activity_station_detail=0x7f090002;
         public static final int bart_map=0x7f090006;
         public static final int bart_map_title=0x7f090005;
         public static final int departureFrag=0x7f090004;
         public static final int fragment_container=0x7f090001;
         public static final int label=0x7f090003;
+        public static final int station_body=0x7f090008;
         public static final int station_label=0x7f090007;
         public static final int textView1=0x7f090000;
     }

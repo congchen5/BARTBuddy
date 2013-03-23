@@ -19,6 +19,56 @@ import android.widget.Toast;
 import android.widget.TabHost.TabContentFactory;
 
 public class MainActivity extends Activity implements OnStationSelectedListener {
+	public static HashMap<String, String> stationAbbr = new HashMap<String, String>();
+	static {
+		stationAbbr.put("12th St. Oakland City Center", "12th");
+		stationAbbr.put("16th St. Mission", "16th");
+		stationAbbr.put("19th St. Oakland", "19th");
+		stationAbbr.put("24th St. Mission", "24th");
+		stationAbbr.put("Ashby", "ashb");
+		stationAbbr.put("Balboa Park", "balb");
+		stationAbbr.put("Bay Fair", "bayf");
+		stationAbbr.put("Castro Valley", "cast");
+		stationAbbr.put("Civic Center", "civc");
+		stationAbbr.put("Coliseum / Oakland Airport", "cols");
+		stationAbbr.put("Colma", "colm");
+		stationAbbr.put("Concord", "conc");
+		stationAbbr.put("Daly City", "daly");
+		stationAbbr.put("Downtown Berkeley", "dbrk");
+		stationAbbr.put("Dublin / Pleasanton", "dubl");
+		stationAbbr.put("El Cerrito del Norte", "deln");
+		stationAbbr.put("El Cerrito Plaza", "plza");
+		stationAbbr.put("Embarcadero", "embr");
+		stationAbbr.put("Fremont", "frmt");
+		stationAbbr.put("Fruitvale", "ftvl");
+		stationAbbr.put("Glen Park", "glen");
+		stationAbbr.put("Hayward", "hayw");
+		stationAbbr.put("Lafayette", "lafy");
+		stationAbbr.put("Lake Merritt", "lake");
+		stationAbbr.put("MacArthur", "mcar");
+		stationAbbr.put("Millbrae", "mlbr");
+		stationAbbr.put("Montgomery", "mont");
+		stationAbbr.put("North Berkeley", "nbrk");
+		stationAbbr.put("North Concord / Martinez", "ncon");
+		stationAbbr.put("Orinda", "orin");
+		stationAbbr.put("Pittsburg / Bay Point", "pitt");
+		stationAbbr.put("Pleasant Hill", "phil");
+		stationAbbr.put("Powell", "powl");
+		stationAbbr.put("Richmond", "rich");
+		stationAbbr.put("Rockridge", "rock");
+		stationAbbr.put("San Bruno", "sbrn");
+		stationAbbr.put("San Francisco Intl Airport", "sfia");
+		stationAbbr.put("San Leandro", "sanl");
+		stationAbbr.put("South Hayward", "shay");
+		stationAbbr.put("South San Francisco", "ssan");
+		stationAbbr.put("Union City", "ucty");
+		stationAbbr.put("Walnut Creek", "wcrk");
+		stationAbbr.put("West Oakland", "woak");
+	}
+	
+	public static String getStationAbbr(String station_name) {
+		return stationAbbr.get(station_name);
+	}
 	public static Context appContext;
 	
 	/** Called when the activity is first created. */
@@ -69,7 +119,7 @@ public class MainActivity extends Activity implements OnStationSelectedListener 
 
 		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft) {
-			Toast.makeText(getApplicationContext(), "Reselected!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Reselected!", Toast.LENGTH_SHORT).show();
 		}
 		
 		@Override

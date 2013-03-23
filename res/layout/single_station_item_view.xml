@@ -8,7 +8,17 @@
     <TextView
         android:id="@+id/station_label"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="#00ffff"
+        android:textIsSelectable="true"
+        android:textSize="25dip"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/station_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:padding="10dip"
         android:textColor="#00ffff"
         android:textIsSelectable="true"
