@@ -4,187 +4,82 @@ import java.util.HashMap;
 
 import edu.berkeley.cs160.congchen.prog3.departureFrag.OnStationSelectedListener;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.ActionBar.Tab;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabContentFactory;
 
-public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener, OnStationSelectedListener {
-
-	private TabHost mTabHost;
-	private HashMap mapTabInfo = new HashMap();
-	private TabInfo mLastTab = null;
-
-	private class TabInfo {
-		 private String tag;
-         private Class clss;
-         private Bundle args;
-         private Fragment fragment;
-         TabInfo(String tag, Class clazz, Bundle args) {
-        	 this.tag = tag;
-        	 this.clss = clazz;
-        	 this.args = args;
-         }
-
-	}
-
-	class TabFactory implements TabContentFactory {
-
-		private final Context mContext;
-
-	    /**
-	     * @param context
-	     */
-	    public TabFactory(Context context) {
-	        mContext = context;
-	    }
-
-	    /** (non-Javadoc)
-	     * @see android.widget.TabHost.TabContentFactory#createTabContent(java.lang.String)
-	     */
-	    public View createTabContent(String tag) {
-	        View v = new View(mContext);
-	        v.setMinimumWidth(0);
-	        v.setMinimumHeight(0);
-	        return v;
-	    }
-
-	}
-	/** (non-Javadoc)
-	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
-	 */
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		// Step 1: Inflate layout
-		setContentView(R.layout.activity_main);
-		// Step 2: Setup TabHost
-		initialiseTabHost(savedInstanceState);
-		if (savedInstanceState != null) {
-            mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab")); //set the tab as per the saved state
-        }
-	}
-
-	/** (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onSaveInstanceState(android.os.Bundle)
-     */
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("tab", mTabHost.getCurrentTabTag()); //save the tab selected
-        super.onSaveInstanceState(outState);
-    }
-
-	/**
-	 * Step 2: Setup TabHost
-	 */
-	private void initialiseTabHost(Bundle args) {
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-        mTabHost.setup();
-        TabInfo tabInfo = null;
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab1").setIndicator("About"), ( tabInfo = new TabInfo("Tab1", aboutFrag.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab2").setIndicator("Map"), ( tabInfo = new TabInfo("Tab2", mapFrag.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Departures"), ( tabInfo = new TabInfo("Tab3", departureFrag.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-//        MainActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3_station").setIndicator("blah"), ( tabInfo = new TabInfo("Tab3_station", singleStationListItem.class, args)));
-//        TabsFragmentActivity.addTab(this, this.mTabHost, this.mTabHost.newTabSpec("Tab3").setIndicator("Tab 3"), ( tabInfo = new TabInfo("Tab3", Tab3Fragment.class, args)));
-//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        // Default to first tab
-        this.onTabChanged("Tab1");
-        //
-        mTabHost.setOnTabChangedListener(this);
-	}
-
-	/**
-	 * @param activity
-	 * @param tabHost
-	 * @param tabSpec
-	 * @param clss
-	 * @param args
-	 */
-	private static void addTab(MainActivity activity, TabHost tabHost, TabHost.TabSpec tabSpec, TabInfo tabInfo) {
-		// Attach a Tab view factory to the spec
-		tabSpec.setContent(activity.new TabFactory(activity));
-        String tag = tabSpec.getTag();
-
-        // Check to see if we already have a fragment for this tab, probably
-        // from a previously saved state.  If so, deactivate it, because our
-        // initial state is that a tab isn't shown.
-        tabInfo.fragment = activity.getSupportFragmentManager().findFragmentByTag(tag);
-        if (tabInfo.fragment != null && !tabInfo.fragment.isDetached()) {
-            FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
-            ft.detach(tabInfo.fragment);
-            ft.commit();
-            activity.getSupportFragmentManager().executePendingTransactions();
-        }
-
-        tabHost.addTab(tabSpec);
-	}
-
-	/** (non-Javadoc)
-	 * @see android.widget.TabHost.OnTabChangeListener#onTabChanged(java.lang.String)
-	 */
-	public void onTabChanged(String tag) {
-		TabInfo newTab = (TabInfo) this.mapTabInfo.get(tag);
-		if (mLastTab != newTab) {
-			FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            if (mLastTab != null) {
-                if (mLastTab.fragment != null) {
-                	ft.detach(mLastTab.fragment);
-                }
-            }
-            if (newTab != null) {
-                if (newTab.fragment == null) {
-                    newTab.fragment = Fragment.instantiate(this,
-                            newTab.clss.getName(), newTab.args);
-                    ft.add(R.id.realtabcontent, newTab.fragment, newTab.tag);
-                } else {
-                    ft.attach(newTab.fragment);
-                }
-            }
-            
-            Log.d("fragment manager in activity: ", "" + ft.isEmpty());
-            mLastTab = newTab;
-            ft.commit();
-            this.getSupportFragmentManager().executePendingTransactions();
-            Log.d("ft ID: ", ft.toString());
-		}
-    }
-
-
-	//NOTE. MAKE MORE EFFICIENT SO DON'T CREATE NEW INSTANCE OF FRAGMENT EACH TIME
+public class MainActivity extends Activity implements OnStationSelectedListener {
+	public static Context appContext;
+	
+	/** Called when the activity is first created. */
 	@Override
-	public void onStationSelected(String station) {
-        FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-		ft.addToBackStack(null);
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		// ActionBar gets initiated
+		ActionBar actionbar = getActionBar();
+		// Tell the ActionBar we want to use Tabs.
+		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		// initiating both tabs and set text to it.
+		ActionBar.Tab PlayerTab = actionbar.newTab().setText("About");
+		ActionBar.Tab MapTab = actionbar.newTab().setText("Map");
+		ActionBar.Tab DepartureTab = actionbar.newTab().setText("Departures");
+
+		// create the two fragments we want to use for display content
+		Fragment aboutFragment = new aboutFrag();
+		Fragment mapFragment = new mapFrag();
+		Fragment departureFragment = new departureFrag();
+
+		// set the Tab listener. Now we can listen for clicks.
+		PlayerTab.setTabListener(new MyTabsListener(aboutFragment));
+		MapTab.setTabListener(new MyTabsListener(mapFragment));
+		DepartureTab.setTabListener(new MyTabsListener(departureFragment));
 		
-		//create argument for new fragment that will be created
-		Bundle b = new Bundle();
-		b.putString("station", station);
-        Fragment displayStationInfo = Fragment.instantiate(this, singleStationListItem.class.getName(), b);
-		
-        Fragment cur = getSupportFragmentManager().findFragmentById(R.id.realtabcontent);
-        ft.detach(cur);
-        ft.add(R.id.realtabcontent, displayStationInfo);
-//		ft.replace(R.id.realtabcontent, displayStationInfo);
-//		ft.detach(mLastTab.fragment);
-		ft.commit();
-		this.getSupportFragmentManager().executePendingTransactions();
-		
-//		ft = this.getSupportFragmentManager().beginTransaction();
-//        Bundle b = new Bundle();
-//		b.putString("station", station);
-//        Fragment displayStationInfo = Fragment.instantiate(this, singleStationListItem.class.getName(), b);
-//		ft.add(R.id.main_body, displayStationInfo, "tab3_station");
-//        ft.commit();
-//        this.getSupportFragmentManager().executePendingTransactions();
+		// add the two tabs to the actionbar
+		actionbar.addTab(PlayerTab);
+		actionbar.addTab(MapTab);
+		actionbar.addTab(DepartureTab);
 	}
+	
+	@Override
+	public void onStationSelected(String station, Activity a) {
+		Intent launchingIntent = new Intent();
+		launchingIntent.setClass(a, StationDetailActivity.class);
+		launchingIntent.putExtra("station", station);
+		startActivity(launchingIntent);
+	}
+	
+	class MyTabsListener implements ActionBar.TabListener {
+		public Fragment fragment;
 
+		public MyTabsListener(Fragment fragment) {
+			this.fragment = fragment;
+		}
+
+		@Override
+		public void onTabReselected(Tab tab, FragmentTransaction ft) {
+			Toast.makeText(getApplicationContext(), "Reselected!", Toast.LENGTH_LONG).show();
+		}
+
+		@Override
+		public void onTabSelected(Tab tab, FragmentTransaction ft) {
+			ft.replace(R.id.fragment_container, fragment);
+		}
+
+		@Override
+		public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+			ft.remove(fragment);
+		}
+	}
 }
-
-
