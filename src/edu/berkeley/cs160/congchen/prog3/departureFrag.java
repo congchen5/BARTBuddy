@@ -1,12 +1,8 @@
 package edu.berkeley.cs160.congchen.prog3;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +16,10 @@ import android.widget.TextView;
 public class departureFrag extends ListFragment {
 	private String[] all_stations;
 	private OnStationSelectedListener sListener;
+	private int mCurCheckPosition = 0;
 	
 	public interface OnStationSelectedListener {
-		public void onStationSelected(String station);
+		public void onStationSelected(String station, Activity a);
 	}
 	
 	@Override
@@ -38,24 +35,35 @@ public class departureFrag extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-//		super.onCreate(savedInstanceState);
-//		setListAdapter(new ArrayAdapter(getActivity().getApplicationContext(),
-//				android.R.layout.simple_list_item_activated_1, tutorialList));
+		// super.onCreate(savedInstanceState);
+		// setListAdapter(new
+		// ArrayAdapter(getActivity().getApplicationContext(),
+		// android.R.layout.simple_list_item_activated_1, tutorialList));
 
-		 // storing string resources into Array
-		 all_stations = getResources().getStringArray(R.array.all_stations);
+		// storing string resources into Array
+		all_stations = getResources().getStringArray(R.array.all_stations);
+
+		// Binding resources Array to ListAdapter
+		this.setListAdapter(new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, all_stations)); // R.layout.all_stations_list_item
 		
-		 // Binding resources Array to ListAdapter
-		 this.setListAdapter(new ArrayAdapter<String>(getActivity(),
-		 R.layout.all_stations_list_item, all_stations));
+		if (savedInstanceState != null) {
+			// Restore last state for checked position.
+            mCurCheckPosition = savedInstanceState.getInt("curChoice", 0);
+		}
 	}
 	
+	@Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("curChoice", mCurCheckPosition);
+    }
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// selected item
 		String station = ((TextView) v).getText().toString();
-		sListener.onStationSelected(station);
+		sListener.onStationSelected(station, getActivity());
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +78,7 @@ public class departureFrag extends ListFragment {
             // the view hierarchy; it would just never be used.
             return null;
         }
-		View v = (LinearLayout)inflater.inflate(R.layout.departure, container, false);
+		View v = (LinearLayout) inflater.inflate(R.layout.departure, container, false);
         return v;
 	}
 }
