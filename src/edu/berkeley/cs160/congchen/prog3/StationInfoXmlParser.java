@@ -8,7 +8,7 @@ import java.util.List;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import android.graphics.Color;
+import android.util.Log;
 import android.util.Xml;
 
 public class StationInfoXmlParser {
@@ -33,41 +33,32 @@ public class StationInfoXmlParser {
 
         parser.require(XmlPullParser.START_TAG, ns, "root");
         while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
+        	if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
+            
             // Starts by looking for the entry tag
-            if (name.equals("etd")) {
-                entries.add(readEntry(parser));
+            if (name.equals("station")) {
+            	parser.require(XmlPullParser.START_TAG, ns, "station");
+            	while (parser.next() != XmlPullParser.END_TAG) {
+            		if (parser.getEventType() != XmlPullParser.START_TAG) {
+                        continue;
+                    }
+            		String name2 = parser.getName();
+                	if (name2.equals("etd")) {
+                    	entries.add(readEntry(parser));
+                	}
+                	else {
+                		skip(parser);
+                	}
+            	}
+
             } else {
                 skip(parser);
             }
         }
         return entries;
-    }
-    
-    // Also need to get the time value
-    // This class represents a single entry (post) in the XML feed.
-    // It includes the data members "destination", "minutes", "hexcolor"
-    public static class Entry {
-        public final String destination;
-        public List<Estimate> estimates;
-
-        public Entry(String destination, List<Estimate> estimates) {
-            this.destination = destination;
-            this.estimates = estimates;
-        }
-    }
-    
-    public static class Estimate {
-    	public final String minute;
-    	public final int intColor;
-    	
-    	public Estimate(String minute, int intColor) {
-    		this.minute = minute;
-    		this.intColor = intColor;
-    	}
     }
     
     // Parses the contents of an entry. If it encounters a the appropriate tag, hands them off
@@ -78,11 +69,11 @@ public class StationInfoXmlParser {
         List<Estimate> estimates = new ArrayList<Estimate>();
         
         while (parser.next() != XmlPullParser.END_TAG) {
-            estimates = null;
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
+            Log.d("name: ", name);
             if (name.equals("destination")) {
             	destination = readDestination(parser);
             } else if (name.equals("estimate")) {
@@ -107,40 +98,28 @@ public class StationInfoXmlParser {
     private Estimate readEstimate(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "estimate");
     	String minute = null;
-    	int intColor = 0;
           
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
             }
             String name = parser.getName();
-            if (name.equals("minute")) {
+            if (name.equals("minutes")) {
             	minute = readMinute(parser);
-            } else if (name.equals("hexColor")) {
-            	intColor = readHexColor(parser);
+            	Log.d("minute read: ", minute);
             } else {
                 skip(parser);
             }
         }
-        return new Estimate(minute, hexColor);
+        return new Estimate(minute);
     }
     
     // Processes minute tags in the feed.
     private String readMinute(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "minute");
+        parser.require(XmlPullParser.START_TAG, ns, "minutes");
         String minute = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "minute");
+        parser.require(XmlPullParser.END_TAG, ns, "minutes");
         return minute;
-    }
-    
-    // Processes hexColor tags in the feed.
-    private Color readHexColor(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "minute");
-        String hexColorString = readText(parser);
-        Color c = new Color();
-        Color.parseColor(hexColorString);
-        parser.require(XmlPullParser.END_TAG, ns, "minute");
-        return c;
     }
     
     // For the tags title and summary, extracts their text values.
@@ -151,6 +130,34 @@ public class StationInfoXmlParser {
             parser.nextTag();
         }
         return result;
+    }
+    
+    // Processes summary tags in the feed.
+    public String readTime(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "root");
+        
+        while (parser.next() != XmlPullParser.END_TAG) {
+        	if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            String name = parser.getName();
+            if (name.equals("time")) {
+            	return getTime(parser);
+        	}
+        	else {
+        		skip(parser);
+        	}
+        }
+        return null;
+        
+    }
+    
+    // Processes time tags in the feed.
+    private String getTime(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "time");
+        String time = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "time");
+        return time;
     }
     
     // Skips tags the parser isn't interested in. Uses depth to handle nested tags. i.e.,
@@ -172,5 +179,4 @@ public class StationInfoXmlParser {
             }
         }
     }
-
 }

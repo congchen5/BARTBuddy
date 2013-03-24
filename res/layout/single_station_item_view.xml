@@ -14,7 +14,7 @@
         android:textIsSelectable="true"
         android:textSize="25dip"
         android:textStyle="bold" />
-
+    
     <TextView
         android:id="@+id/station_body"
         android:layout_width="fill_parent"
@@ -24,5 +24,11 @@
         android:textIsSelectable="true"
         android:textSize="25dip"
         android:textStyle="bold" />
+    
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
