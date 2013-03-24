@@ -1,5 +1,13 @@
 package edu.berkeley.cs160.congchen.prog3;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
