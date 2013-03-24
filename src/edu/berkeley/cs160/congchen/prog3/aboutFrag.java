@@ -13,6 +13,6 @@ public class aboutFrag extends Fragment {
 		if (container == null) {
             return null;
         }
-		return (LinearLayout) inflater.inflate(R.layout.about, container, false);
+		return inflater.inflate(R.layout.about, container, false);
 	}
 }

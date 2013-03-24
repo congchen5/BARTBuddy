@@ -1,20 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView android:id="@+id/textView1"
-        android:text="Fragment A"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
-</LinearLayout>
-<!--
+        <TextView
+            android:id="@+id/textView1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="About"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="BART, Bay Area Rapid Transit, is a public transportation train system that helps people travel within the Bay Area. BART is a convenient and affordable option for passengers who do not have cars, travel far distances, or simply do not want to worry about parking. It is great for traveling to sight see or commuting simply because BART extends to many places and eases the worry of commuting. Whether you are new to the bay area or a local, BART is worth learning how to use."
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView2_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="How to use BART"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textView3_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Going to a Station"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="The first step in using BART is to go to a station. When you want to travel somewhere, find the nearest or most covnvenient BART station. After all, you can only get on a BART train by going to the station."
+            android:textSize="15sp" />
+
+        <!--
+        <ImageView
+            android:id="@+id/bart_station"
+            android:layout_width="match_parent"
+            android:layout_height="440dp"
+            android:padding="10sp" />-->
+
+        <TextView
+            android:id="@+id/textView4_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Buying a Ticket"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView4_pt1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="BART trips are charged by the distance of your trip. Depending on your source and destination station, your cost will vary. Thus, BART tickets hold cash value in that you can load a ticket with any amount of money. Depending on the trip, it will deduct the cost from your ticket. When you go to a station, find a ticket machine that looks like the one below "
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView4_pt2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Look up your destination and cost and follow the instructions on the screen to buy a ticket with the necessary value. Be wary about whether your trip is a round trip or one way when determining how much to load on a ticket. \n\nNote: if you lose your BART ticket, you will lose all the money you have loaded on the ticket, so be careful about how much you put on a ticket."
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView5_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Traveling"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Once you have your ticket, you can get onto the platform and get on your train! Insert your ticket in the walkway like machine (picture below). When the red slides move apart, walk through and grab your ticket that has popped up. Then, proceed onto the platform to get on your train."
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textView6_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Help"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="If you are ever lost, need help, have issues with the machines, or simply have a question, you can always refer to the information booth located at all BART stations."
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</ScrollView><!--
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#FF0000" >
 
-</LinearLayout>-->
+</LinearLayout>
+-->

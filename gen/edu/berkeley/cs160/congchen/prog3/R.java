@@ -25,35 +25,59 @@ public final class R {
     }
     public static final class drawable {
         public static final int bart_map=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int bart_station_2=0x7f020001;
+        public static final int going_to_trains_2=0x7f020002;
+        public static final int help_desk_2=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int ticket_machine_2=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000b;
-        public static final int activity_station_detail=0x7f090002;
-        public static final int bart_map=0x7f090006;
-        public static final int bart_map_title=0x7f090005;
-        public static final int departureFrag=0x7f090004;
-        public static final int dest_label=0x7f090009;
-        public static final int fragment_container=0x7f090001;
-        public static final int label=0x7f090003;
-        public static final int station_body=0x7f090008;
-        public static final int station_label=0x7f090007;
-        public static final int textView1=0x7f090000;
-        public static final int time_label=0x7f09000a;
+        public static final int action_settings=0x7f09001b;
+        public static final int activity_station_detail=0x7f09000d;
+        public static final int bart_map=0x7f090011;
+        public static final int bart_map_title=0x7f090010;
+        public static final int btnSubmit=0x7f090019;
+        public static final int departureFrag=0x7f09000f;
+        public static final int dest_label=0x7f090014;
+        public static final int fragment_container=0x7f09000c;
+        public static final int label=0x7f09000e;
+        public static final int spinner1=0x7f090017;
+        public static final int spinner2=0x7f090018;
+        public static final int station_body=0x7f090013;
+        public static final int station_label=0x7f090012;
+        public static final int textView1=0x7f090001;
+        public static final int textView1_title=0x7f090000;
+        public static final int textView2=0x7f090016;
+        public static final int textView2_title=0x7f090002;
+        public static final int textView3=0x7f090004;
+        public static final int textView3_title=0x7f090003;
+        public static final int textView4_pt1=0x7f090006;
+        public static final int textView4_pt2=0x7f090007;
+        public static final int textView4_title=0x7f090005;
+        public static final int textView5=0x7f090009;
+        public static final int textView5_title=0x7f090008;
+        public static final int textView6=0x7f09000b;
+        public static final int textView6_title=0x7f09000a;
+        public static final int time_label=0x7f090015;
+        public static final int trip_label=0x7f09001a;
     }
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int activity_station_detail=0x7f030002;
-        public static final int all_stations_list_item=0x7f030003;
-        public static final int departure=0x7f030004;
-        public static final int map=0x7f030005;
-        public static final int single_station_item_view=0x7f030006;
-        public static final int station_detail_list_item=0x7f030007;
+        public static final int activity_trip_detail=0x7f030003;
+        public static final int all_stations_list_item=0x7f030004;
+        public static final int departure=0x7f030005;
+        public static final int map=0x7f030006;
+        public static final int single_station_item_view=0x7f030007;
+        public static final int station_detail_list_item=0x7f030008;
+        public static final int trip=0x7f030009;
+        public static final int trip_detail_frag_view=0x7f03000a;
     }
     public static final class menu {
         public static final int main=0x7f080000;
         public static final int station_detail=0x7f080001;
+        public static final int trip_detail=0x7f080002;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -61,6 +85,7 @@ public final class R {
         public static final int hello_world=0x7f060002;
         public static final int station_label=0x7f060003;
         public static final int title_activity_station_detail=0x7f060004;
+        public static final int title_activity_trip_detail=0x7f060005;
     }
     public static final class style {
         /** 
