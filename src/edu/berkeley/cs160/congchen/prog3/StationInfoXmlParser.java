@@ -14,8 +14,6 @@ import android.util.Xml;
 public class StationInfoXmlParser {
 	private static final String ns = null;
 
-    // We don't use namespaces
-
     public List<Entry> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();

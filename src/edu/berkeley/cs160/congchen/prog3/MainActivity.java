@@ -1,8 +1,5 @@
 package edu.berkeley.cs160.congchen.prog3;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import edu.berkeley.cs160.congchen.prog3.departureFrag.OnStationSelectedListener;
@@ -10,23 +7,22 @@ import edu.berkeley.cs160.congchen.prog3.tripFrag.OnTripSelectedListener;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ActionBar.Tab;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TabHost;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.TabHost.TabContentFactory;
 
-public class MainActivity extends Activity implements OnStationSelectedListener, OnTripSelectedListener {
+public class MainActivity extends Activity implements OnStationSelectedListener, OnTripSelectedListener, LocationListener {
 	public static HashMap<String, String> stationAbbr = new HashMap<String, String>();
 	static {
 		stationAbbr.put("12th St. Oakland City Center", "12th");
@@ -73,6 +69,30 @@ public class MainActivity extends Activity implements OnStationSelectedListener,
 		stationAbbr.put("Walnut Creek", "wcrk");
 		stationAbbr.put("West Oakland", "woak");
 	}
+	
+	static final HashMap<String, String> STATION_LOCATION_MAP = new HashMap<String, String>(){
+		{
+			put("12th", "37.803664,-122.271604");put("16th", "37.765062,-122.419694");put("19th", "37.80787,-122.269029");
+			put("24th", "37.752254,-122.418466");put("ashb", "37.853024,-122.26978");put("balb", "37.72198087,-122.4474142");
+			put("bayf", "37.697185,-122.126871");put("cast", "37.690754,-122.075567");put("civc", "37.779528,-122.413756");
+			put("cols", "37.754006,-122.197273");put("colm", "37.684638,-122.466233");put("conc", "37.973737,-122.029095");
+			put("daly", "37.70612055,-122.4690807");put("dbrk", "37.869867,-122.268045");put("dubl", "37.701695,-121.900367");
+			put("deln", "37.925655,-122.317269");put("plza", "37.9030588,-122.2992715");put("embr", "37.792976,-122.396742");
+			put("frmt", "37.557355,-121.9764");put("ftvl", "37.774963,-122.224274");put("glen", "37.732921,-122.434092");
+			put("hayw", "37.670399,-122.087967");put("lafy", "37.893394,-122.123801");put("lake", "37.797484,-122.265609");
+			put("mcar", "37.828415,-122.267227");put("mlbr", "37.599787,-122.38666");put("mont", "37.789256,-122.401407");
+			put("nbrk", "37.87404,-122.283451");put("ncon", "38.003275,-122.024597");put("orin", "37.87836087,-122.1837911");
+			put("pitt", "38.018914,-121.945154");put("phil", "37.928403,-122.056013");put("powl", "37.784991,-122.406857");
+			put("rich", "37.936887,-122.353165");put("rock", "37.844601,-122.251793");put("sbrn", "37.637753,-122.416038");
+			put("sfia", "37.6159,-122.392534");put("sanl", "37.72261921,-122.1613112");put("shay", "37.63479954,-122.0575506");
+			put("ssan", "37.664174,-122.444116");put("ucty", "37.591208,-122.017867");put("wcrk", "37.905628,-122.067423");
+			put("wdub", "37.699759,-121.928099");put("woak", "37.80467476,-122.2945822");
+		}
+	};
+	
+	private LocationManager manager;
+	public double lat;
+	public double lon;
 	
 	public static String getStationAbbr(String station_name) {
 		return stationAbbr.get(station_name);
@@ -122,6 +142,8 @@ public class MainActivity extends Activity implements OnStationSelectedListener,
 		actionbar.addTab(MapTab);
 		actionbar.addTab(TripTab);
 		actionbar.addTab(DepartureTab);
+		
+		checkLocation(getWindow().getDecorView().findViewById(android.R.id.content));
 	}
 	
 	@Override
@@ -154,38 +176,83 @@ public class MainActivity extends Activity implements OnStationSelectedListener,
 			ft.remove(fragment);
 		}
 	}
-	
-	private Bitmap decodeFile(File f){
-	    try {
-	        //Decode image size
-	        BitmapFactory.Options o = new BitmapFactory.Options();
-	        o.inJustDecodeBounds = true;
-	        BitmapFactory.decodeStream(new FileInputStream(f),null,o);
-
-	        //The new size we want to scale to
-	        final int REQUIRED_SIZE=70;
-
-	        //Find the correct scale value. It should be the power of 2.
-	        int scale=1;
-	        while(o.outWidth/scale/2>=REQUIRED_SIZE && o.outHeight/scale/2>=REQUIRED_SIZE)
-	            scale*=2;
-
-	        //Decode with inSampleSize
-	        BitmapFactory.Options o2 = new BitmapFactory.Options();
-	        o2.inSampleSize=scale;
-	        return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-	    } catch (FileNotFoundException e) {}
-	    return null;
-	}
 
 	@Override
-	public void onTripSelected(String from, String to, Activity a) {
+	public void onTripSelected(String srcStation, String destStation, String from, String to, String travelToggle, String timeString, Activity a) {
 		Intent launchingIntent = new Intent();
 		launchingIntent.setClass(a, TripDetailActivity.class);
 		
 		Log.d("values: ", from + " to " + to);
+		launchingIntent.putExtra("srcStation", srcStation);
+		launchingIntent.putExtra("destStation", destStation);
 		launchingIntent.putExtra("from", from);
 		launchingIntent.putExtra("to", to);
+		launchingIntent.putExtra("travelToggle", travelToggle);
+		launchingIntent.putExtra("timeString", timeString);
 		startActivity(launchingIntent);	
+	}
+	
+	public void showTimePickerDialog(View v) {
+	    DialogFragment newFragment = new tripFrag();
+	    newFragment.show(getFragmentManager(), "timePicker");
+	}
+	
+	public void checkLocation(View v) {
+		Log.d("checkLocation: ", " is called");
+		//initialize location manager
+		manager =  (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+		//check if GPS is enabled
+		//if not, notify user with a toast
+		if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+	    	Toast.makeText(this, "GPS is disabled.", Toast.LENGTH_SHORT).show();
+	    } else {
+
+	    	//get a location provider from location manager
+	    	//empty criteria searches through all providers and returns the best one
+	    	String providerName = manager.getBestProvider(new Criteria(), true);
+	    	Location location = manager.getLastKnownLocation(providerName);
+	    	Log.d("right before ", " updatedList");
+//	    	TextView tv = (TextView)findViewById(R.id.locationResults);
+	    	if (location != null) {
+//		    	Toast.makeText(this, location.getLatitude() + " latitude, " + location.getLongitude() + " longitude", Toast.LENGTH_SHORT).show();
+		    	Log.d("location info: ", location.getLatitude() + " latitude, " + location.getLongitude() + " longitude");
+		    	lat = location.getLatitude();
+		    	lon = location.getLongitude();
+	    	} else {
+//	    		Toast.makeText(this, "Last known location not found. Waiting for updated location...", Toast.LENGTH_SHORT).show();
+	    	}
+	    	//sign up to be notified of location updates every 15 seconds - for production code this should be at least a minute
+	    	manager.requestLocationUpdates(providerName, 15000, 1, this);
+	    }
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+    	if (location != null) {
+//	    	Toast.makeText(this, location.getLatitude() + " latitude, " + location.getLongitude() + " longitude", Toast.LENGTH_SHORT).show();
+	    	Log.d("location info: ", location.getLatitude() + " latitude, " + location.getLongitude() + " longitude");
+	    	lat = location.getLatitude();
+	    	lon = location.getLongitude();
+    	} else {
+//    		Toast.makeText(this, "Last known location not found. Waiting for updated location...", Toast.LENGTH_SHORT).show();
+    	}
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {}
+
+	@Override
+	public void onProviderEnabled(String arg0) {}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {}
+	
+	public double getLatitude() {
+		return lat;
+	}
+	
+	public double getLongitude() {
+		return lon;
 	}
 }

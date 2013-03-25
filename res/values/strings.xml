@@ -7,5 +7,7 @@
     <string name="station_label">temp</string>
     <string name="title_activity_station_detail">StationDetailActivity</string>
     <string name="title_activity_trip_detail">TripDetailActivity</string>
+    <string name="arrow"> ----------------------&gt; </string>
+    <string name="title_arrow"> ....................... </string>
 
 </resources>

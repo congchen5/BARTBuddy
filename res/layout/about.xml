@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="BART trips are charged by the distance of your trip. Depending on your source and destination station, your cost will vary. Thus, BART tickets hold cash value in that you can load a ticket with any amount of money. Depending on the trip, it will deduct the cost from your ticket. When you go to a station, find a ticket machine that looks like the one below "
+            android:text="BART trips are charged by the distance of your trip. Depending on your source and destination station, your cost will vary. Thus, BART tickets hold cash value in that you can load a ticket with any amount of money. Depending on the trip, it will deduct the cost from your ticket. When you go to a station, find a ticket machine to purchase a ticket. "
             android:textSize="15sp" />
 
         <TextView
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="Look up your destination and cost and follow the instructions on the screen to buy a ticket with the necessary value. Be wary about whether your trip is a round trip or one way when determining how much to load on a ticket. \n\nNote: if you lose your BART ticket, you will lose all the money you have loaded on the ticket, so be careful about how much you put on a ticket."
+            android:text="Look up your destination and cost and follow the instructions on the screen to buy a ticket with the necessary value. Be wary about whether your trip is a round trip or one way when determining how much to load onto a ticket. \n\nNote: if you lose your BART ticket, you will lose all the money you have loaded on the ticket, so be careful about how much you put on a ticket."
             android:textSize="15sp" />
 
         <TextView
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10sp"
-            android:text="Once you have your ticket, you can get onto the platform and get on your train! Insert your ticket in the walkway like machine (picture below). When the red slides move apart, walk through and grab your ticket that has popped up. Then, proceed onto the platform to get on your train."
+            android:text="Once you have your ticket, you can get onto the platform and get on your train! Insert your ticket into the red walkway like machine. When the red slides move apart, walk through and grab your ticket that has popped up. Then, proceed onto the platform to get on your train."
             android:textSize="15sp" />
 
         <TextView
@@ -113,12 +113,4 @@
             android:textSize="15sp" />
     </LinearLayout>
 
-</ScrollView><!--
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#FF0000" >
-
-</LinearLayout>
--->
+</ScrollView>

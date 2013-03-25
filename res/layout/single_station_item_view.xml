@@ -14,7 +14,7 @@
         android:textIsSelectable="true"
         android:textSize="25dip"
         android:textStyle="bold" />
-    
+
     <TextView
         android:id="@+id/station_body"
         android:layout_width="fill_parent"
@@ -24,7 +24,37 @@
         android:textIsSelectable="true"
         android:textSize="25dip"
         android:textStyle="bold" />
-    
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <!-- Single List Item Design -->
+
+        <TextView
+            android:id="@+id/station_header1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="#00ffff"
+            android:padding="10dip"
+            android:textSize="16dip"
+            android:textStyle="bold" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/station_header2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#00ffff"
+            android:padding="10dip"
+            android:textSize="16dip"
+            android:textStyle="bold" >
+        </TextView>
+    </RelativeLayout>
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"

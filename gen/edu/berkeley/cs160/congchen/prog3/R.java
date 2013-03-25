@@ -32,22 +32,29 @@ public final class R {
         public static final int ticket_machine_2=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f09001b;
+        public static final int action_settings=0x7f090025;
         public static final int activity_station_detail=0x7f09000d;
+        public static final int arrow=0x7f090023;
         public static final int bart_map=0x7f090011;
         public static final int bart_map_title=0x7f090010;
-        public static final int btnSubmit=0x7f090019;
+        public static final int btnSubmit=0x7f09001d;
         public static final int departureFrag=0x7f09000f;
-        public static final int dest_label=0x7f090014;
+        public static final int destS=0x7f090021;
+        public static final int dest_label=0x7f090016;
+        public static final int dest_time=0x7f090024;
         public static final int fragment_container=0x7f09000c;
         public static final int label=0x7f09000e;
-        public static final int spinner1=0x7f090017;
-        public static final int spinner2=0x7f090018;
+        public static final int orig_time=0x7f090022;
+        public static final int spinner1=0x7f090019;
+        public static final int spinner2=0x7f09001a;
+        public static final int srcS=0x7f090020;
         public static final int station_body=0x7f090013;
+        public static final int station_header1=0x7f090014;
+        public static final int station_header2=0x7f090015;
         public static final int station_label=0x7f090012;
         public static final int textView1=0x7f090001;
         public static final int textView1_title=0x7f090000;
-        public static final int textView2=0x7f090016;
+        public static final int textView2=0x7f090018;
         public static final int textView2_title=0x7f090002;
         public static final int textView3=0x7f090004;
         public static final int textView3_title=0x7f090003;
@@ -58,8 +65,11 @@ public final class R {
         public static final int textView5_title=0x7f090008;
         public static final int textView6=0x7f09000b;
         public static final int textView6_title=0x7f09000a;
-        public static final int time_label=0x7f090015;
-        public static final int trip_label=0x7f09001a;
+        public static final int time=0x7f09001c;
+        public static final int time_label=0x7f090017;
+        public static final int toggleButton=0x7f09001b;
+        public static final int trip_body=0x7f09001f;
+        public static final int trip_label=0x7f09001e;
     }
     public static final class layout {
         public static final int about=0x7f030000;
@@ -73,6 +83,7 @@ public final class R {
         public static final int station_detail_list_item=0x7f030008;
         public static final int trip=0x7f030009;
         public static final int trip_detail_frag_view=0x7f03000a;
+        public static final int trip_detail_list_item=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -82,10 +93,12 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
+        public static final int arrow=0x7f060006;
         public static final int hello_world=0x7f060002;
         public static final int station_label=0x7f060003;
         public static final int title_activity_station_detail=0x7f060004;
         public static final int title_activity_trip_detail=0x7f060005;
+        public static final int title_arrow=0x7f060007;
     }
     public static final class style {
         /** 

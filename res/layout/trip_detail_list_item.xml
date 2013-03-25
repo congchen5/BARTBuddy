@@ -5,23 +5,35 @@
     android:orientation="horizontal" >
     
     <!-- Single List Item Design -->
+
     <TextView
-        android:id="@+id/dest_label"
+        android:id="@+id/orig_time"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:padding="10dip"
-        android:textSize="16dip"
         android:layout_alignParentLeft="true"
+        android:textSize="16dip"
         android:textStyle="bold" >
     </TextView>
-    
+
     <TextView
-        android:id="@+id/time_label"
+        android:id="@+id/arrow"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:padding="10dip"
+        android:text="@string/arrow"
+        android:layout_centerHorizontal="true" 
         android:textSize="16dip"
+        android:textStyle="bold" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/dest_time"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:padding="10dip"
         android:layout_alignParentRight="true"
+        android:textSize="16dip"
         android:textStyle="bold" >
     </TextView>
 

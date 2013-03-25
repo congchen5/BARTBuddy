@@ -7,7 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -19,7 +18,6 @@ import org.apache.http.util.EntityUtils;
 import org.xmlpull.v1.XmlPullParserException;
 
 
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -31,14 +29,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class singleStationListItem extends ListFragment {
 //	static final String TAG = Fragment.class.getSimpleName();
-	private String station_name;
-	private URL url;
-	private HttpURLConnection urlConnection;
+//	private String station_name;
+//	private URL url;
+//	private HttpURLConnection urlConnection;
 	
 	private List<Entry> finalEntries;
 	private InfoAdapter e_adapter;
@@ -84,7 +81,7 @@ public class singleStationListItem extends ListFragment {
             return null;
         }
 		
-		View v = (LinearLayout) inflater.inflate(R.layout.single_station_item_view, container, false);
+		View v = inflater.inflate(R.layout.single_station_item_view, container, false);
 		TextView txtStation = (TextView) v.findViewById(R.id.station_label);
 		txtStation.setText(getShownStation());
 		String temp = "http://api.bart.gov/api/etd.aspx?cmd=etd&orig=" + MainActivity.getStationAbbr(getShownStation()) + "&key=MEKB-5UEP-ELQU-5SNA";
@@ -186,12 +183,22 @@ public class singleStationListItem extends ListFragment {
 			
 			finalEntries = entries;
 			if (entries != null && entries.size() > 0) {
+				TextView h1 = (TextView) getActivity().findViewById(R.id.station_header1);
+				TextView h2 = (TextView) getActivity().findViewById(R.id.station_header2);
+				h1.setText("Line");
+				h2.setText("Estimated Arrival Time");
+				
 				for (int i = 0; i < entries.size(); i++) {
 					e_adapter.add(entries.get(i));
 				}
+				e_adapter.notifyDataSetChanged();
 			}
+			else {
+				TextView stationBody = (TextView) getActivity().findViewById(R.id.station_body);
+				stationBody.setText("No information at this time. \n Please try again later" );
+			}
+			
 			Log.d("finalEntries count: ", "" + finalEntries.size());
-			e_adapter.notifyDataSetChanged();
 			Log.d("e_adapter count: ", "" + e_adapter.getCount());
 			//stationBody.setText(t);
 	    }
@@ -210,7 +217,7 @@ public class singleStationListItem extends ListFragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View v = convertView;
 			if (v == null) {
-				v = (LinearLayout) vi.inflate(
+				v = vi.inflate(
 						R.layout.station_detail_list_item, null);
 			}
 			Entry e = items.get(position);
